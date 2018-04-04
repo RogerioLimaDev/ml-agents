@@ -49,7 +49,7 @@ Unity Assets。`python` 目录包含训练代码。
 
     pip3 install .
 
-## 基于 Docker 的安装（实验性）
+## 基于 Docker 的安装（测试阶段）
 
 如果您想使用 Docker for ML-Agents，请按照
 [该指南](Using-Docker.md)进行操作。
@@ -65,6 +65,6 @@ Unity Assets。`python` 目录包含训练代码。
 ## 帮助
 
 如果您在安装 ML-Agents 时遇到任何问题，请
-[提交问题](https://github.com/Unity-Technologies/ml-agents/issues)并务必
-提供有关操作系统、Python 版本和确切错误消息（如可能）的
+[提交问题](https://github.com/Unity-Technologies/ml-agents/issues)，并在提交时
+提供有关操作系统、Python 版本和相关错误消息（如可能）的
 信息。

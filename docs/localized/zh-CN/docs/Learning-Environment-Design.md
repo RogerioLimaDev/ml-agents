@@ -14,14 +14,14 @@ ML-Agents 使用一种称为 [Proximal Policy Optimization (PPO)](https://blog.o
 
 ML-Agents Academy 类按如下方式编排 agent 模拟循环：
 
-1.调用您的 Academy 子类的 `AcademyReset()` 函数。
-2.对场景中的每个 agent 调用 `AgentReset()` 函数。
-3.对场景中的每个 agent 调用 `CollectObservations()` 函数。
-4.使用每个 agent 的 Brain 类来决定 agent 的下一动作。
-5.调用您的子类的 `AcademyAct()` 函数。
-6.对场景中的每个 agent 调用 `AgentAction()` 函数，传入由 agent 的 brain 选择的动作。（如果 agent 已完成，则不调用此函数。）
-7.如果 agent 已达到其 `Max Step` 计数或者已将其自身标记为 `done`，则调用 agent 的 `AgentOnDone()` 函数。或者，如果某个 agent 在场景结束之前已完成，您可以将其设置为重新开始。在这种情况下，Academy 会调用 `AgentReset()` 函数。
-8.当 Academy 达到其自身的 `Max Step` 计数时，它会通过调用您的 Academy 子类的 `AcademyReset()` 函数来再次开始下一场景。
+1. 调用您的 Academy 子类的 `AcademyReset()` 函数。
+2. 对场景中的每个 agent 调用 `AgentReset()` 函数。
+3. 对场景中的每个 agent 调用 `CollectObservations()` 函数。
+4. 使用每个 agent 的 Brain 类来决定 agent 的下一动作。
+5. 调用您的子类的 `AcademyAct()` 函数。
+6. 对场景中的每个 agent 调用 `AgentAction()` 函数，传入由 agent 的 brain 选择的动作。（如果 agent 已完成，则不调用此函数。）
+7. 如果 agent 已达到其 `Max Step` 计数或者已将其自身标记为 `done`，则调用 agent 的 `AgentOnDone()` 函数。或者，如果某个 agent 在场景结束之前已完成，您可以将其设置为重新开始。在这种情况下，Academy 会调用 `AgentReset()` 函数。
+8. 当 Academy 达到其自身的 `Max Step` 计数时，它会通过调用您的 Academy 子类的 `AcademyReset()` 函数来再次开始下一场景。
 
 要创建训练环境，请扩展 Academy 和 Agent 类以实现上述方法。`Agent.CollectObservations()` 和 `Agent.AgentAction()` 函数必须实现；而其他方法是可选的，即是否需要实现它们取决于您的具体情况。
   
