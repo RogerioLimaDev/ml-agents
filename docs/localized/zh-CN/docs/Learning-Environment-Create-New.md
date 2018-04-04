@@ -408,16 +408,16 @@ public override void AgentAction(float[] vectorAction, string textAction)
 按 **Play** 运行场景，并用 WASD 键在平台上移动 agent。确保在 Unity Editor Console 窗口中没有显示任何错误，并且 agent 在到达目标或掉下平台时会重置。请注意，对于较复杂的调试，ML-Agents SDK 提供了一个方便的 Monitor 类，您可以使用该类轻松地在 Game 窗口中显示 agent 状态信息。
 
 您可以执行一个额外的测试是，首先使用 `python/Basics` 
-[Jupyter 笔记本](Background-Jupyter.md)
+[Jupyter Notebook](Background-Jupyter.md)
 确保您的环境和 Python API 能正常工作。在 `Basics` 中，务必将 
-`env_name` 设置为您在构建此环境时指定的环境文件的
+`env_name` 设置为您生成的此环境对应的可执行文件的
 名称。
 
 现在可以开始训练 Agent 了。为了准备进行训练，必须首先将 **Brain Type** 从 **Player** 更改为 **External**。此后的过程与[训练 ML-Agents](Training-ML-Agents.md) 中所述的过程相同。
 
 ## 回顾：场景布局
 
-本节简要回顾在 Unity 环境中使用 Agent 时
+本节简要回顾了在 Unity 环境中使用 Agent 时
 如何组织场景。
 
 您需要在场景中包含三种游戏对象才能使用 Unity ML-Agents：
