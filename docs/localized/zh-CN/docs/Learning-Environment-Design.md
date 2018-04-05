@@ -51,9 +51,9 @@ Academy 基类还定义了若干可以在 Unity Editor Inspector 中设置的重
 
 ### Brain
  
-Brain 内部封装了决策过程。Brain 对象必须是 Hierarchy 视图中的 Academy 的子级。必须为每个 Agent 分配一个 Brain，但可以在多个 Agent 之间共享同一个 Brain。
+Brain 内部封装了决策过程。Brain 对象必须放在 Hierarchy 视图中的 Academy 的子级。我们必须为每个 Agent 分配一个 Brain，但可以在多个 Agent 之间共享同一个 Brain。
 
-应直接使用 Brain 类，而非子类。Brain 行为取决于 brain 的类型。在训练期间，应将 agent 的 brain 类型设置为 **External**。要使用经过训练的模型，请将模型文件导入 Unity 项目，并将 brain 类型更改为 **Internal**。请参阅 [Brain](Learning-Environment-Design-Brains.md) 以了解有关使用不同类型的 brain 的详细信息。如果四种内置的类型不能满足您的需求，您可以扩展 CoreBrain 类以创建不同的 brain 类型。
+当我们使用 Brain 类的时候不需要使用其子类，而应该直接使用 Brain 这个类。Brain 的行为取决于 brain 的类型。在训练期间，应将 agent 上连接的 Brain 的 Brain Type 设置为 **External**。要使用经过训练的模型，请将模型文件导入 Unity 项目，并将对应 Brain 的 Brain  Type 更改为 **Internal**。请参阅 [Brain](Learning-Environment-Design-Brains.md) 以了解有关使用不同类型的 Brain 的详细信息。如果四种内置的类型不能满足您的需求，您可以扩展 CoreBrain 类以创建其它的 Brain 类型。
 
 Brain 类有若干可以使用 Inspector 窗口进行设置的重要属性。对于使用 brain 的 agent，这些属性必须恰当。例如，`Vector Observation Space Size` 属性必须与 agent 创建的特征向量的长度完全匹配。请参阅 [Agent](Learning-Environment-Design-Agents.md) 以获取有关创建 agent 和正确设置 Brain 实例的信息。
 
@@ -61,29 +61,29 @@ Brain 类有若干可以使用 Inspector 窗口进行设置的重要属性。对
 
 ### Agent
 
-Agent 类代表场景中负责收集观测结果并采取动作的一个参与者 (actor)。Agent 类通常附加到场景中原本代表参与者的游戏对象，例如，附加到足球比赛中的球员对象或车辆模拟中的汽车对象。必须为每个 Agent 分配一个 Brain。
+Agent 类代表场景中负责收集观测结果并采取动作的一个参与者 (actor)。我们在配置的时候通常会把Agent 类的脚本附在这个参与者对应的游戏对象上。例如，附加到足球比赛中的球员对象，或车辆模拟中的汽车对象上。此外，必须为每个 Agent 类的脚本分配一个 Brain。
 
 要创建 agent，请扩展 Agent 类并实现基本的 `CollectObservations()` 和 `AgentAction()` 方法：
 
 * `CollectObservations()` — 收集 agent 对其环境的观测结果。
 * `AgentAction()` — 执行由 agent 的 brain 选择的动作，并为当前状态分配奖励。
 
-这些函数的实现决定了分配给此 agent 的 Brain 的属性必须如何设置。
+这些函数的实现决定了分配给此 agent 的 Brain 的属性要如何设置。
  
-您还必须确定 Agent 如何完成任务或超时。agent 完成其任务（或彻底失败）后，您可以在 `AgentAction()` 函数中手动将 agent 设置为完成。您还可以将 agent 的 `Max Steps` 属性设置为正值，这样 agent 在执行了此数量的步骤后会认为自己已完成。Academy 达到自己的 `Max Steps` 计数后，会开始下一场景。如果将 agent 的 `ResetOnDone` 属性设置为 true，则 agent 可以在一个场景中多次尝试自己的任务。（使用 `Agent.AgentReset()` 函数可对 agent 进行准备以便再次开始。）
+您还必须确定 Agent 如何完成任务，以及当它超时后如何处理。agent 完成其任务（或彻底失败）后，您可以在 `AgentAction()` 函数中手动将 agent 设置为完成。您还可以将 agent 的 `Max Steps` 属性设置为正值，这样 agent 在执行了此数量的步骤后会认为自己已完成。Academy 达到自己的 `Max Steps` 计数后，会开始下一场景。如果将 agent 的 `ResetOnDone` 属性设置为 true，则 agent 可以在一个场景中多次尝试自己的任务。（在 `Agent.AgentReset()` 函数中可以设置 agent 的初始化逻辑，为下一次的任务做好准备。）
 
-请参阅 [Agent](Learning-Environment-Design-Agents.md) 以详细了解如何对您自己的 agent 进行编程。
+请参阅 [Agent](Learning-Environment-Design-Agents.md) 以详细了解如何编写一个你自己的 agent。
 
 ##环境
 
-ML-Agents 中的_环境_可以是 Unity 中构建的任何场景。Unity 场景为 agent 提供了观察、行动和学习的环境。如何设置 Unity 场景来用作学习环境实际上取决于您的目标。您可能想要试图解决有限范围的特定 reinforcement learning（强化学习）问题，这种情况下可以使用同一场景来进行训练并测试受过训练的 agent。或者，您可能想要训练 agent 在复杂的游戏或模拟中行动，这种情况下创建专门构建的训练场景可能会更加高效和实用。
+ML-Agents 中的_环境_可以是 Unity 中构建的任何场景。Unity 场景为 agent 提供了观察、行动和学习的环境。如何设置 Unity 场景实际上取决于您的目标。您可能想要试图解决某个特定的reinforcement learning（强化学习）问题，这种情况下您可以在某一个场景内又进行训练又进行测试。或者，您可能想要训练 agent 在复杂的游戏或模拟条件下的做出某些行为，这种情况下创建更有针对性的训练场景可能会更加高效和实用。
 
-训练和测试（或正常游戏）场景都必须包含一个 Academy 对象来控制 agent 的决策过程。Academy 定义了若干可以针对训练场景与常规场景进行不同设置的属性。Academy 的 **Configuration** 属性用于控制渲染和时间刻度。您可以设置 **Training Configuration** 来最大限度缩短 Unity 用于渲染图形的时间，从而加快训练速度。您可能还需要调整其他 Academy 功能设置。例如，`Max Steps` 的大小应尽可能小，从而尽量缩短训练时间：足以让 agent 完成任务并在学习过程中有一些额外的“徘徊思考”(wandering) 时间即可。在常规场景中，您通常根本不希望 Academy 重置场景；如果是这样，应将 `Max Steps` 设置为零。
+训练和测试（或正常游戏）场景都必须包含一个 Academy 对象来控制 agent 的决策过程。Academy 定义了若干可以针对训练场景与测试场景进行不同设置的属性。Academy 的 **Configuration** 属性用于控制渲染和时间刻度。您可以设置 **Training Configuration** 来最大限度缩短 Unity 用于渲染图形的时间，从而加快训练速度。您可能还需要调整其他 Academy 功能设置。例如，`Max Steps` 的大小应尽可能小，从而尽量缩短训练时间，但也不能太小，必须大到足以让 agent 完成任务并在学习过程中有一些额外的“徘徊思考”(wandering) 时间。在测试场景中，您通常根本不希望 Academy 重置场景；如果是这样，应将 `Max Steps` 设置为零。
 
 在 Unity 中创建训练环境时，必须设置场景以便可以通过外部训练过程来控制场景。注意以下几点：
 
-* 在训练过程启动 Unity 应用程序时，训练场景必须自动开始。
-* 场景至少须包括一个 **External** brain。
-* Academy 必须针对每个训练场景将场景重置为有效起点。
-* 训练场景必须有明确的结局，为此需要使用 `Max Steps`，或由每个 agent 将自身设置为 `done`。
+* 在训练程序启动后，Unity 可执行文件会被自动打开，然后训练场景会自动开始训练。
+* 场景中至少须包括一个 **External** brain。
+* Academy 必须在每一轮训练后将场景重置为有效的初始状态。
+* 训练场景必须有明确的结束状态，为此需要使用 `Max Steps`，或让每个 agent 将自身设置为 `done`。
 
